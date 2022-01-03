@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/mNameView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="名稱"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mA_Name_Ch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/mInfoView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/mA_Name_En"
+            app:layout_constraintTop_toBottomOf="@+id/mNameView" />
+
+        <TextView
+            android:id="@+id/mA_Name_En"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/mInfoView"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Name_Ch"
+            app:layout_constraintRight_toRightOf="@+id/mNameView"
+            app:layout_constraintTop_toBottomOf="@+id/mNameView" />
+
+
+        <TextView
+            android:id="@+id/mInfoView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="俗稱"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/mA_AlsoKnown"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+        <TextView
+            android:id="@+id/mA_AlsoKnown"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/mInfoView"
+            app:layout_constraintRight_toRightOf="@+id/mInfoView"
+            app:layout_constraintTop_toBottomOf="@+id/mInfoView" />
+
+        <TextView
+            android:id="@+id/mBriefView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="簡介"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_AlsoKnown" />
+
+
+        <TextView
+            android:id="@+id/A_Brief"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/mBriefView"
+            app:layout_constraintRight_toRightOf="@+id/mBriefView"
+            app:layout_constraintTop_toBottomOf="@+id/mBriefView" />
+
+        <TextView
+            android:id="@+id/mFeatureView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="特徵"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/A_Brief" />
+
+        <TextView
+            android:id="@+id/mA_Feature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/mFeatureView"
+            app:layout_constraintRight_toRightOf="@id/mFeatureView"
+            app:layout_constraintTop_toBottomOf="@+id/mFeatureView" />
+
+        <TextView
+            android:id="@+id/mClassView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="種類"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_Feature" />
+
+
+        <TextView
+            android:id="@+id/mA_Genus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/mClassView"
+            app:layout_constraintRight_toLeftOf="@+id/mA_Family"
+            app:layout_constraintTop_toBottomOf="@id/mClassView"
+
+            />
+
+        <TextView
+            android:id="@+id/mA_Family"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Genus"
+            app:layout_constraintRight_toRightOf="@id/mClassView"
+            app:layout_constraintTop_toBottomOf="@id/mClassView" />
+
+
+        <TextView
+            android:id="@+id/mFunctionApplicationView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="應用與使用"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_Genus" />
+
+
+        <TextView
+            android:id="@+id/mA_FunctionApplication"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/mFunctionApplicationView"
+            app:layout_constraintRight_toRightOf="@+id/mFunctionApplicationView"
+            app:layout_constraintTop_toBottomOf="@+id/mFunctionApplicationView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

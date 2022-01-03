@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mNameView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="名稱"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mE_Name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/mArea"
+            app:layout_constraintTop_toBottomOf="@+id/mNameView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mArea"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@id/mE_Name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mNameView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mInfoView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="資訊"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mArea" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mE_Info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/mInfoView"
+            app:layout_constraintRight_toRightOf="@+id/mInfoView"
+            app:layout_constraintTop_toBottomOf="@+id/mInfoView" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mE_Memo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textColor="#FF0000"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/mE_Info"
+            app:layout_constraintRight_toRightOf="@+id/mE_Info"
+            app:layout_constraintTop_toBottomOf="@+id/mE_Info" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+
+            android:id="@+id/mDistributionView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="出現地"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mE_Memo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Distribution"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/mDistributionView"
+            app:layout_constraintRight_toRightOf="@id/mDistributionView"
+            app:layout_constraintTop_toBottomOf="@+id/mDistributionView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

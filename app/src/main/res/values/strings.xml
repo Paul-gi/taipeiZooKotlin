@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TaipeiZooKotlin</string>
+<!--    <string name="strInDoorArea">室內區</string>-->
+<!--    <string name="strOutDoorArea">戶外區</string>-->
+    <string name="Back">ＢＡＣＫ</string>
+    <string name="change">切</string>
+
+    <string name="Department">Department</string>
+    <string name="Animal">Animal</string>
+    <string name="Plant">Plant</string>
+</resources>

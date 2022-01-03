@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--因為gilde載入圖片套件出的問題而加入的http安全問題  manifest android:networkSecurityConfig="@xml/network_security_config"  -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">Your url</domain>
+    </domain-config>
+</network-security-config>

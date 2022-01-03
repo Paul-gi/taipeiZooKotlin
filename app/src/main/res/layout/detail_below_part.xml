@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mImageTitle"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="圖片"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mA_Pic01_URL"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintLeft_toLeftOf="@id/mImageTitle"
+            app:layout_constraintRight_toLeftOf="@+id/mA_Pic02_URL"
+            app:layout_constraintTop_toBottomOf="@id/mImageTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mA_Pic02_URL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mA_Pic01_URL"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Pic01_URL"
+            app:layout_constraintRight_toRightOf="@id/mImageTitle"
+            app:layout_constraintTop_toTopOf="@+id/mA_Pic01_URL" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Pic01_ALT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14dp"
+            app:layout_constraintLeft_toLeftOf="@id/mA_Pic01_URL"
+            app:layout_constraintRight_toLeftOf="@+id/mA_Pic02_ALT"
+            app:layout_constraintTop_toBottomOf="@id/mA_Pic01_URL" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Pic02_ALT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mA_Pic01_ALT"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Pic01_ALT"
+            app:layout_constraintRight_toRightOf="@id/mA_Pic02_URL"
+            app:layout_constraintTop_toBottomOf="@id/mA_Pic02_URL" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mA_Pic03_URL"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:layout_constraintLeft_toLeftOf="@id/mA_Pic01_ALT"
+            app:layout_constraintRight_toRightOf="@+id/mA_Pic01_ALT"
+            app:layout_constraintTop_toBottomOf="@id/mA_Pic01_ALT" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mA_Pic04_URL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mA_Pic03_URL"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Pic03_URL"
+            app:layout_constraintRight_toRightOf="@id/mA_Pic02_ALT"
+            app:layout_constraintTop_toTopOf="@+id/mA_Pic03_URL" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Pic03_ALT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14dp"
+            app:layout_constraintLeft_toLeftOf="@id/mA_Pic03_URL"
+            app:layout_constraintRight_toRightOf="@+id/mA_Pic03_URL"
+            app:layout_constraintTop_toBottomOf="@id/mA_Pic03_URL" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Pic04_ALT"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/mA_Pic03_ALT"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Pic03_ALT"
+            app:layout_constraintRight_toRightOf="@id/mA_Pic04_URL"
+            app:layout_constraintTop_toBottomOf="@id/mA_Pic04_URL" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mVdoView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="影片"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_Pic03_ALT" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Vedio_URL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:scrollbars="vertical"
+            android:text="點擊開啟連結"
+            android:textSize="15dp"
+            app:layout_constraintLeft_toLeftOf="@id/mVdoView"
+            app:layout_constraintRight_toRightOf="@id/mVdoView"
+            app:layout_constraintTop_toBottomOf="@id/mVdoView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mLocationView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="本館位置"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_Vedio_URL" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mGeoRecycleViewGeo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/mLocation"
+            app:layout_constraintTop_toBottomOf="@+id/mLocationView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="點擊開啟位置"
+            app:layout_constraintLeft_toRightOf="@+id/mGeoRecycleViewGeo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mLocationView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

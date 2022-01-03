@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mDepartmentButton"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="80dp"
+                android:background="@color/yellow"
+                android:foreground="@drawable/button_radius"
+                android:textColor="@color/black"
+                android:text="館區" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mAnimalButton"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/yellow"
+                android:foreground="@drawable/button_radius"
+                android:textColor="@color/black"
+                android:text="動物區" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mPlantButton"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/yellow"
+                android:foreground="@drawable/button_radius"
+                android:textColor="@color/black"
+                android:text="植物區" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

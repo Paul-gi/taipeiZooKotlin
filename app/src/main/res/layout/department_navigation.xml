@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mInDoorAreaBtn"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="80dp"
+                android:background="@color/yellow"
+                android:foreground="@drawable/button_radius"
+                android:textColor="@color/black"
+                 />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mOutDoorAreaBtn"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/yellow"
+                android:foreground="@drawable/button_radius"
+                android:textColor="@color/black"
+
+                />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

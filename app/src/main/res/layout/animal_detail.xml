@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mNameView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="名稱"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Name_Ch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/mBehaviorView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/mA_Name_En"
+            app:layout_constraintTop_toBottomOf="@+id/mNameView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Name_En"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/mBehaviorView"
+            app:layout_constraintLeft_toRightOf="@id/mA_Name_Ch"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mNameView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mBehaviorView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="行為"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/mA_Behavior"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Behavior"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@+id/mBehaviorView"
+            app:layout_constraintRight_toRightOf="@+id/mBehaviorView"
+            app:layout_constraintTop_toBottomOf="@+id/mBehaviorView" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mDistributionView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="出現地"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_Behavior" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Distribution"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/mDistributionView"
+            app:layout_constraintRight_toRightOf="@id/mDistributionView"
+            app:layout_constraintTop_toBottomOf="@+id/mDistributionView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mClassView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@color/yellowtwo"
+            android:paddingTop="5dp"
+            android:text="種類"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mA_Distribution" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Class"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/mClassView"
+            app:layout_constraintRight_toLeftOf="@+id/mA_Family"
+            app:layout_constraintTop_toBottomOf="@id/mClassView"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mA_Family"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toRightOf="@+id/mA_Class"
+            app:layout_constraintRight_toRightOf="@id/mClassView"
+            app:layout_constraintTop_toBottomOf="@id/mClassView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
