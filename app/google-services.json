@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "176620493048",
+    "project_id": "taipeizoo-aa60c",
+    "storage_bucket": "taipeizoo-aa60c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176620493048:android:e19c96a176969de426030d",
+        "android_client_info": {
+          "package_name": "com.example.taipeizookotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176620493048-rpg3egec3vcphs539k0354058oqdphbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW40xHO3N6Ho1RGFG0Q-BYtNEeM8wlFmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176620493048-rpg3egec3vcphs539k0354058oqdphbg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

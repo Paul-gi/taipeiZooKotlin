@@ -10,7 +10,9 @@
         <entry key="app/src/main/res/layout/department_detail.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/department_navigation.xml" value="0.22" />
         <entry key="app/src/main/res/layout/detail_below_part.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/fcm_remoteview.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_google_map.xml" value="0.15364583333333334" />
+        <entry key="app/src/main/res/layout/fragment_list_page.xml" value="0.18125" />
         <entry key="app/src/main/res/layout/fragment_navigation.xml" value="0.3640625" />
         <entry key="app/src/main/res/layout/googlemap_geo_item.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/googlemap_recycleview_utem.xml" value="0.15364583333333334" />

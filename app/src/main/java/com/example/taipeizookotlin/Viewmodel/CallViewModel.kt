@@ -5,6 +5,8 @@ package com.example.taipeizookotlin.Viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.taipeizookotlin.DataList.ListData
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.Service.RetrofitManager
 import com.example.taipeizookotlin.Service.ZooApiService
 import com.example.taipeizookotlin.Util.UtilCommonStr
@@ -16,7 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.ArrayList
 
-class CallViewModel: ViewModel() {
+class CallViewModel : ViewModel() {
     private val mDataList: MutableLiveData<ArrayList<ListData>?> =
         MutableLiveData<ArrayList<ListData>?>()
     private val mFinish = MutableLiveData<Boolean>()
@@ -34,6 +36,7 @@ class CallViewModel: ViewModel() {
     }
 
     fun mCallApi(pTitleName: String) {
+
         if (mIsNotFinish) {
             return
         }
@@ -44,17 +47,37 @@ class CallViewModel: ViewModel() {
         val mZooApiService: ZooApiService =
             RetrofitManager().getInstance()!!.createService(ZooApiService::class.java)
 
-        mCall = when (pTitleName) {
-            UtilCommonStr.getInstance().mAnimal -> {
-                mZooApiService.getAnimalData(50, mIndex)
+        /**
+         * 如果沒有firebasePageCode參數就是-1
+         * -1的話走正常的開啟流程
+         */
+        if (mFirebasePageCode == -1) {
+            mCall = when (pTitleName) {
+                UtilCommonStr.getInstance().mAnimal -> {
+                    mZooApiService.getAnimalData(50, mIndex)
+                }
+                UtilCommonStr.getInstance().mPlant -> {
+                    mZooApiService.getPlantData(50, mIndex)
+                }
+                else -> {
+                    mZooApiService.getPavilionData(pTitleName, 50, mIndex)
+                }
             }
-            UtilCommonStr.getInstance().mPlant -> {
-                mZooApiService.getPlantData(50, mIndex)
-            }
-            else -> {
-                mZooApiService.getPavilionData(pTitleName, 50, mIndex)
+        } else {
+            mCall = when (pTitleName) {
+                UtilCommonStr.getInstance().mAnimal -> {
+                    mZooApiService.getAnimalData(1, mFirebasePageCode)
+                }
+                UtilCommonStr.getInstance().mPlant -> {
+                    mZooApiService.getPlantData(1, mFirebasePageCode)
+                }
+                else -> {
+                    mZooApiService.getPavilionData(pTitleName, 1, mFirebasePageCode)
+                }
             }
         }
+
+
         mCall!!.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
                 try {

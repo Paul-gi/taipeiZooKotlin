@@ -8,4 +8,5 @@
     <string name="Department">Department</string>
     <string name="Animal">Animal</string>
     <string name="Plant">Plant</string>
+    <string name="FCMToken">fcmToken</string>
 </resources>

@@ -23,7 +23,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
     }
 
     private val mListDataAdapter: ListDataAdapter by lazy {
-        ListDataAdapter(object : ListDataAdapter.ListDataItf{
+        ListDataAdapter(object : ListDataAdapter.ListDataItf {
             override fun getData(pListData: ListData?) {
 
             }
@@ -34,17 +34,19 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
     override val mLayout: Int
         get() = R.layout.fragment_list_page
 
-     override fun initView() {
+    override fun initView() {
         super.initView()
-         mProgressDialogCustom!!.show(parentFragmentManager,"")
-         mLinearLayoutManager = LinearLayoutManager(this.activity)
-         mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
-         mDataBinding.mToolbarLayout.mToolbar.title = mTitleStr
-         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener { fragmentBackPressed() }
+        mProgressDialogCustom!!.show(parentFragmentManager, "")
+        mLinearLayoutManager = LinearLayoutManager(this.activity)
+        mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
+        mDataBinding.mToolbarLayout.mToolbar.title = mTitleStr
+        mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
+            fragmentBackPressed(this)
+        }
 
 
-         mDataBinding.mRecycleView.adapter = mListDataAdapter
-         mDataBinding.mToolbarLayout.mChange.setOnClickListener {
+        mDataBinding.mRecycleView.adapter = mListDataAdapter
+        mDataBinding.mToolbarLayout.mChange.setOnClickListener {
             if (!mPageState) {
                 mGridLayoutManager = GridLayoutManager(activity, 1)
                 mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
@@ -57,6 +59,8 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
             mListDataAdapter.setPageState(mPageState)
             mDataBinding.mRecycleView.adapter = mListDataAdapter
         }
+
+        fragmentUseFcmBackPressed(this, this.requireActivity())
         //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
 
@@ -64,28 +68,27 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
         mDataBinding.mRecycleView.setOnScrollChangeListener { _, _, _, _, _ ->
             if (!mDataBinding.mRecycleView.canScrollVertically(1)) {
                 if (!mFinish) {
-                    mProgressDialogCustom!!.show(parentFragmentManager,"")
+                    mProgressDialogCustom!!.show(parentFragmentManager, "")
                     callApiThread()
                 } else {
                     Toast.makeText(activity, "到底了", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-         mCallViewModel.getDataFinishState().observe(viewLifecycleOwner) { aBoolean ->
-             mFinish = aBoolean
-         }
-         mCallViewModel.getDataListObserver().observe(viewLifecycleOwner) { pCallData ->
-             if (pCallData != null) {
-                 mListDataAdapter.setData(pCallData)
-                 mProgressDialogCustom!!.dismiss()
-             }
-         }
+        mCallViewModel.getDataFinishState().observe(viewLifecycleOwner) { aBoolean ->
+            mFinish = aBoolean
+        }
+        mCallViewModel.getDataListObserver().observe(viewLifecycleOwner) { pCallData ->
+            if (pCallData != null) {
+                mListDataAdapter.setData(pCallData)
+                mProgressDialogCustom!!.dismiss()
+            }
+        }
         callApiThread()
     }
 
     private fun callApiThread() {
         Thread { mCallViewModel.mCallApi(mTitleStr) }.start()
     }
-
 
 }

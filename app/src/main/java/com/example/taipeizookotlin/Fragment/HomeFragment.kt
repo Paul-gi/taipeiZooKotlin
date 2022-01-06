@@ -2,31 +2,59 @@
 
 package com.example.taipeizookotlin.Fragment
 
+import android.annotation.SuppressLint
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFcmFromInDepartmentBackPage
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Util.UtilCommonStr
 import com.example.taipeizookotlin.databinding.AllAreaNavigationBinding
 import com.example.taipeizookotlin.databinding.DepartmentNavigationBinding
 import com.example.taipeizookotlin.databinding.HomeFragmentBinding
 
-class HomeFragment : BaseFragment<HomeFragmentBinding>() {
+class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
+
 
     override val mLayout: Int
         get() = R.layout.home_fragment
 
+
+    @SuppressLint("StringFormatInvalid")
     override fun initView() {
         super.initView()
+        if (mFcmFromInDepartmentBackPage) {
+            openDepartmentPage()
+            mFcmFromInDepartmentBackPage = false
+        }
 
-        fistPage(mDataBinding.mAllAreaNavigationIC)
+
+        firstPage(mDataBinding.mAllAreaNavigationIC)
         secondPage(mDataBinding.mDepartmentNavigationIC)
 
+        /**
+         * UI的Back鍵
+         */
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
             if (mDataBinding.mToolbarLayout.root.visibility == View.VISIBLE) {
                 openHomePage()
             } else {
-                fragmentBackPressed()
+                fragmentBackPressed(null)
             }
         }
+
+        /**
+         * 手機內建的back事件
+         */
+        requireActivity().onBackPressedDispatcher
+            .addCallback(this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (mDataBinding.mToolbarLayout.root.visibility == View.VISIBLE) {
+                        openHomePage()
+                    } else {
+                        fragmentBackPressed(null)
+                    }
+                }
+            })
     }
 
     private fun secondPage(pDepartmentNavigationIC: DepartmentNavigationBinding) {
@@ -44,7 +72,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
         }
     }
 
-    private fun fistPage(pAllAreaNavigationIC: AllAreaNavigationBinding) {
+    private fun firstPage(pAllAreaNavigationIC: AllAreaNavigationBinding) {
         pAllAreaNavigationIC.mDepartmentButton.setOnClickListener {
             openDepartmentPage()
         }
@@ -79,8 +107,21 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
 
         mDataBinding.mToolbarLayout.root.visibility = View.VISIBLE
-        mDataBinding.mDepartmentNavigationIC.mInDoorAreaBtn.text = UtilCommonStr.getInstance().mInSideArea
-        mDataBinding.mDepartmentNavigationIC.mOutDoorAreaBtn.text = UtilCommonStr.getInstance().mOutSideArea
+        mDataBinding.mDepartmentNavigationIC.mInDoorAreaBtn.text =
+            UtilCommonStr.getInstance().mInSideArea
+        mDataBinding.mDepartmentNavigationIC.mOutDoorAreaBtn.text =
+            UtilCommonStr.getInstance().mOutSideArea
         mDataBinding.mDepartmentNavigationIC.root.visibility = View.VISIBLE
     }
+
+//    private fun fcmFromDepartmentBack() {
+//        if (mFcmFromInDepartmentBackPage) {
+//            mDataBinding.mAllAreaNavigationIC.root.visibility = View.GONE
+//            mDataBinding.mDepartmentNavigationIC.root.visibility = View.VISIBLE
+//            mFcmFromInDepartmentBackPage = false
+//        } else {
+//            mDataBinding.mAllAreaNavigationIC.root.visibility = View.VISIBLE
+//            mDataBinding.mDepartmentNavigationIC.root.visibility = View.GONE
+//        }
+//    }
 }
