@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
-import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.Service.RetrofitManager
 import com.example.taipeizookotlin.Service.ZooApiService
 import com.example.taipeizookotlin.Util.UtilCommonStr
@@ -16,7 +15,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
+import java.util.*
 
 class CallViewModel : ViewModel() {
     private val mDataList: MutableLiveData<ArrayList<ListData>?> =
@@ -51,7 +50,19 @@ class CallViewModel : ViewModel() {
          * 如果沒有firebasePageCode參數就是-1
          * -1的話走正常的開啟流程
          */
-        if (mFirebasePageCode == -1) {
+        mFirebasePageCode?.let {
+            mCall = when (pTitleName) {
+                UtilCommonStr.getInstance().mAnimal -> {
+                    mZooApiService.getAnimalData(1, it)
+                }
+                UtilCommonStr.getInstance().mPlant -> {
+                    mZooApiService.getPlantData(1, it)
+                }
+                else -> {
+                    mZooApiService.getPavilionData(pTitleName, 1, it)
+                }
+            }
+        } ?: kotlin.run {
             mCall = when (pTitleName) {
                 UtilCommonStr.getInstance().mAnimal -> {
                     mZooApiService.getAnimalData(50, mIndex)
@@ -61,18 +72,6 @@ class CallViewModel : ViewModel() {
                 }
                 else -> {
                     mZooApiService.getPavilionData(pTitleName, 50, mIndex)
-                }
-            }
-        } else {
-            mCall = when (pTitleName) {
-                UtilCommonStr.getInstance().mAnimal -> {
-                    mZooApiService.getAnimalData(1, mFirebasePageCode)
-                }
-                UtilCommonStr.getInstance().mPlant -> {
-                    mZooApiService.getPlantData(1, mFirebasePageCode)
-                }
-                else -> {
-                    mZooApiService.getPavilionData(pTitleName, 1, mFirebasePageCode)
                 }
             }
         }

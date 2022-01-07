@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.DetailActivity
+import com.example.taipeizookotlin.Firebase.FirebaseService
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Room.AppDataBase
 import com.example.taipeizookotlin.Room.User
@@ -26,7 +28,7 @@ class ListDataAdapter(
     private val mListDataItf: ListDataItf,
     private val context: Context,
     private val mTitleName: String,
-    private var mPageState: Boolean
+    private var mPageState: Boolean,
 ) : RecyclerView.Adapter<ListDataAdapter.MyViewHolder>() {
     private val mZooDataList: ArrayList<ListData> = ArrayList<ListData>()
     private val mAlreadyRead = ArrayList<Int>()
@@ -61,7 +63,7 @@ class ListDataAdapter(
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(
         holder: MyViewHolder,
-        @SuppressLint("RecyclerView") position: Int
+        @SuppressLint("RecyclerView") position: Int,
     ) {
         val iListData: ListData = mZooDataList[position]
         try {
@@ -78,7 +80,18 @@ class ListDataAdapter(
             holder.itemView.setBackgroundResource(0)
         }
         holder.itemView.tag = position
+
+
         holder.itemView.setOnClickListener(mClick)
+
+        FirebaseService.mFirebasePageCode?.let {
+            if (it != -2) {
+                holder.itemView.performClick()
+                FirebaseService.mFirebasePageCode = -2
+            }
+        }
+
+
     }
 
     private val mClick = View.OnClickListener { v ->
@@ -122,6 +135,7 @@ class ListDataAdapter(
         iBundle.putString("TitleName", mTitleName)
         iBundle.putString("ListData", iData.getRawData())
         iIntent.putExtras(iBundle)
+        Log.v("aaaaaa","111")
         context.startActivity(iIntent)
     }
 

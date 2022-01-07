@@ -14,7 +14,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Util.ProgressDialogCustom
@@ -138,7 +137,6 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     fun onBackPressOpenHomePage(pFragment: Fragment) {
         if (mFirebasePageTitle != "") {
             mFirebasePageTitle = ""
-            mFirebasePageCode = -1
             parentFragmentManager.beginTransaction()
                 .replace(
                     R.id.mFragment,

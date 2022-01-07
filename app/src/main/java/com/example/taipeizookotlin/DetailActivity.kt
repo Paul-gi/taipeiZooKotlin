@@ -1,29 +1,31 @@
 package com.example.taipeizookotlin
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taipeizookotlin.Adapter.GoogleMapGeoAdapter
 import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.DataList.LocationPositionData
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.Util.UtilCommonStr
 import com.example.taipeizookotlin.Util.UtilTools
 import com.example.taipeizookotlin.databinding.MainDetailActivityBinding
-import java.lang.Exception
-import java.util.ArrayList
+import java.util.*
 
-class DetailActivity : Activity() {
+class DetailActivity : AppCompatActivity() {
 
     private var mBundle: Bundle? = null
     private var mTitle: String? = null
     private var mListData: ListData = ListData()
     private var mLocationPositionData: LocationPositionData = LocationPositionData()
     private var mGoogleMapGeoAdapter: GoogleMapGeoAdapter = GoogleMapGeoAdapter()
-    private var mLocationPositionListData: ArrayList<LocationPositionData> = ArrayList<LocationPositionData>()
+    private var mLocationPositionListData: ArrayList<LocationPositionData> =
+        ArrayList<LocationPositionData>()
     private var mGeoListData: ArrayList<LocationPositionData> = ArrayList()
     private var mUtilTools: UtilTools = UtilTools()
     private lateinit var mDataBinding: MainDetailActivityBinding
@@ -154,7 +156,6 @@ class DetailActivity : Activity() {
         mGoogleMapGeoAdapter.setData(mGeoListData)
         mDataBinding.mBelowDetail.mGeoRecycleViewGeo.layoutManager = LinearLayoutManager(this)
         mDataBinding.mBelowDetail.mGeoRecycleViewGeo.adapter = mGoogleMapGeoAdapter
-        mDataBinding.mTitleBar.mBackBtn.setOnClickListener { this.finish() }
         if (mListData.getKeyVedio().equals("")) {
             mDataBinding.mBelowDetail.mAVedioURL.visibility = View.GONE
             mDataBinding.mBelowDetail.mVdoView.visibility = View.GONE
@@ -172,5 +173,33 @@ class DetailActivity : Activity() {
                 startActivity(intent)
             }
         }
+        mDataBinding.mTitleBar.mBackBtn.setOnClickListener {
+            if (mFirebasePageCode == -2) {
+                fromFcmPageCode()
+            }else{
+                this.finish()
+            }
+        }
+
+    }
+
+    override fun onBackPressed() {
+        if (mFirebasePageCode == -2) {
+            fromFcmPageCode()
+        }else{
+            this.finish()
+        }
+    }
+
+    private fun fromFcmPageCode(){
+        mFirebasePageCode = null
+        val intent = Intent()
+        val bundle = Bundle()
+        bundle.putBoolean("isFromFCMPageCode", true)
+        bundle.putString("mFirebasePageTitle", mFirebasePageTitle)
+        intent.setClass(this@DetailActivity, MainActivity::class.java)
+        intent.putExtras(bundle)
+        this.finish()
+        startActivity(intent)
     }
 }

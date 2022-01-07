@@ -29,7 +29,7 @@ class FirebaseService : FirebaseMessagingService() {
      */
     companion object {
         var mFirebasePageTitle = ""
-        var mFirebasePageCode = -1
+        var mFirebasePageCode: Int? = null
         var mFcmFromInDepartmentBackPage = false
     }
 
@@ -56,7 +56,7 @@ class FirebaseService : FirebaseMessagingService() {
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    private fun sendNotification(pTitle: String, pMessage: Int) {
+    private fun sendNotification(pTitle: String, pMessage: Int?) {
         val iIntent = Intent(this, MainActivity::class.java)
 
 
@@ -69,9 +69,25 @@ class FirebaseService : FirebaseMessagingService() {
                 0,
                 iIntent, PendingIntent.FLAG_ONE_SHOT
             )
+
+
+        /**
+         * 兩種客製化版本
+         */
+//        var iNotification = NotificationCompat.Builder(this, mChannelID)
+//            .setSmallIcon(R.drawable.logo)
+////            .setContentTitle(pTitle)
+////            .setContentText(pMessage.toString())
+//            //.setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.button_radius))
+//            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+//            .setCustomContentView(getRemoteView(pTitle, pMessage?.toString()))
+//            .setCustomBigContentView(getRemoteView(pTitle, pMessage?.toString()))
+//            .setAutoCancel(true)
+//            .setContentIntent(pendingIntent)
+
         val iNotification = NotificationCompat.Builder(applicationContext, mChannelID)
             //.setWhen(System.currentTimeMillis())
-            .setContent(getRemoteView(pTitle, pMessage.toString()))
+            .setContent(getRemoteView(pTitle, pMessage?.toString()))
             .setSmallIcon(R.drawable.logo)
             .setContentTitle(pTitle)
             .setContentText(pMessage.toString())
@@ -99,7 +115,7 @@ class FirebaseService : FirebaseMessagingService() {
 
 
     @SuppressLint("RemoteViewLayout")
-    private fun getRemoteView(pTitle: String, pMessage: String): RemoteViews {
+    private fun getRemoteView(pTitle: String, pMessage: String?): RemoteViews {
         val iRemoteView = RemoteViews(packageName, R.layout.fcm_remoteview)
         iRemoteView.setTextViewText(R.id.mTitle, pTitle)
         iRemoteView.setTextViewText(R.id.mMessage, pMessage)
