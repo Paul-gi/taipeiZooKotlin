@@ -80,18 +80,7 @@ class ListDataAdapter(
             holder.itemView.setBackgroundResource(0)
         }
         holder.itemView.tag = position
-
-
         holder.itemView.setOnClickListener(mClick)
-
-        FirebaseService.mFirebasePageCode?.let {
-            if (it != -2) {
-                holder.itemView.performClick()
-                FirebaseService.mFirebasePageCode = -2
-            }
-        }
-
-
     }
 
     private val mClick = View.OnClickListener { v ->
@@ -135,7 +124,6 @@ class ListDataAdapter(
         iBundle.putString("TitleName", mTitleName)
         iBundle.putString("ListData", iData.getRawData())
         iIntent.putExtras(iBundle)
-        Log.v("aaaaaa","111")
         context.startActivity(iIntent)
     }
 
