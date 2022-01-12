@@ -5,7 +5,6 @@ package com.example.taipeizookotlin.Viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.taipeizookotlin.DataList.ListData
-import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
 import com.example.taipeizookotlin.Service.RetrofitManager
 import com.example.taipeizookotlin.Service.ZooApiService
 import com.example.taipeizookotlin.Util.UtilCommonStr
@@ -46,35 +45,19 @@ class CallViewModel : ViewModel() {
         val mZooApiService: ZooApiService =
             RetrofitManager().getInstance()!!.createService(ZooApiService::class.java)
 
-        /**
-         * 如果沒有firebasePageCode參數就是-1
-         * -1的話走正常的開啟流程
-         */
-        mFirebasePageCode?.let {
-            mCall = when (pTitleName) {
-                UtilCommonStr.getInstance().mAnimal -> {
-                    mZooApiService.getAnimalData(1, it)
-                }
-                UtilCommonStr.getInstance().mPlant -> {
-                    mZooApiService.getPlantData(1, it)
-                }
-                else -> {
-                    mZooApiService.getPavilionData(pTitleName, 1, it)
-                }
+
+        mCall = when (pTitleName) {
+            UtilCommonStr.getInstance().mAnimal -> {
+                mZooApiService.getAnimalData(50, mIndex)
             }
-        } ?: kotlin.run {
-            mCall = when (pTitleName) {
-                UtilCommonStr.getInstance().mAnimal -> {
-                    mZooApiService.getAnimalData(50, mIndex)
-                }
-                UtilCommonStr.getInstance().mPlant -> {
-                    mZooApiService.getPlantData(50, mIndex)
-                }
-                else -> {
-                    mZooApiService.getPavilionData(pTitleName, 50, mIndex)
-                }
+            UtilCommonStr.getInstance().mPlant -> {
+                mZooApiService.getPlantData(50, mIndex)
+            }
+            else -> {
+                mZooApiService.getPavilionData(pTitleName, 50, mIndex)
             }
         }
+
 
 
         mCall!!.enqueue(object : Callback<JsonObject?> {

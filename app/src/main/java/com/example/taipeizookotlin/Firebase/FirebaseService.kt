@@ -7,30 +7,46 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.os.PowerManager
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import com.example.taipeizookotlin.DataList.ListData
+import com.example.taipeizookotlin.DetailActivity
 import com.example.taipeizookotlin.MainActivity
 import com.example.taipeizookotlin.R
+import com.example.taipeizookotlin.Service.RetrofitManager
+import com.example.taipeizookotlin.Service.ZooApiService
 import com.example.taipeizookotlin.Util.UtilCommonStr
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.JsonObject
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.ArrayList
 import kotlin.random.Random
 
 class FirebaseService : FirebaseMessagingService() {
 
     private val mChannelID = "notificationChannelID"
     private val mChannelName = "com.example.taipeizookotlin"
+    private var mBundle = Bundle()
+    private var mIntent = Intent()
 
     /**
      * 如果沒有firebasePageCode參數就是-1
      * -1的話走正常的開啟流程
+     * -2就是走到Detail詳細頁面內
      */
     companion object {
         var mFirebasePageTitle = ""
-        var mFirebasePageCode: Int? = null
+        var mFirebasePageCode = -1
         var mFcmFromInDepartmentBackPage = false
+        var mFirebaseHavePageCode = false
     }
 
 
@@ -45,29 +61,44 @@ class FirebaseService : FirebaseMessagingService() {
         mFirebasePageTitle = pRemoteMessage.data["Title"].toString()
         mFirebasePageCode = pRemoteMessage.data["PageCode"]!!.toInt()
 
-        //如果是室內區或室外區就打開 用於切換頁的動作
-        if (mFirebasePageTitle == "OutSideArea" || mFirebasePageTitle == "InSideArea") {
-            mFcmFromInDepartmentBackPage = true
+
+        // 如果有FCM_PageCode就會開啟 打API的時候做判斷
+        if (mFirebasePageCode != -1 && mFirebasePageTitle != "") {
+            mFirebaseHavePageCode = true
         }
 
         wakeUpPhone()
 
-        sendNotification(mFirebasePageTitle, mFirebasePageCode)
+        checkNotification(mFirebasePageTitle, mFirebasePageCode)
+    }
+
+    override fun onStart(intent: Intent?, startId: Int) {
+        super.onStart(intent, startId)
+    }
+
+    /**
+     * mFirebaseHavePageCode = true 代表有PageCode跟TitleName 所以走詳細頁面
+     * 如果沒有PageCode但是有TitleName 就走列表頁
+     * 否則走一般的流程
+     */
+    @SuppressLint("UnspecifiedImmutableFlag")
+    private fun checkNotification(pTitle: String, pPageCode: Int) {
+        if (mFirebaseHavePageCode) {
+            goToDetailPage(mFirebasePageTitle, mFirebasePageCode)
+        } else {
+            mIntent = Intent(this, MainActivity::class.java)
+            sendNotification(pTitle, pPageCode)
+        }
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    private fun sendNotification(pTitle: String, pMessage: Int?) {
-        val iIntent = Intent(this, MainActivity::class.java)
-
-
-        iIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-
+    private fun sendNotification(pTitle: String, pMessage: Int) {
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val pendingIntent =
             PendingIntent.getActivity(
                 this,
                 0,
-                iIntent, PendingIntent.FLAG_ONE_SHOT
+                mIntent, PendingIntent.FLAG_UPDATE_CURRENT
             )
 
 
@@ -87,7 +118,7 @@ class FirebaseService : FirebaseMessagingService() {
 
         val iNotification = NotificationCompat.Builder(applicationContext, mChannelID)
             //.setWhen(System.currentTimeMillis())
-            .setContent(getRemoteView(pTitle, pMessage?.toString()))
+            .setContent(getRemoteView(pTitle, pMessage.toString()))
             .setSmallIcon(R.drawable.logo)
             .setContentTitle(pTitle)
             .setContentText(pMessage.toString())
@@ -99,6 +130,7 @@ class FirebaseService : FirebaseMessagingService() {
         val mNotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+
         /**檢查手機版本是否支援通知；若支援則新增"頻道"*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val iNotificationChannel =
@@ -106,11 +138,7 @@ class FirebaseService : FirebaseMessagingService() {
 
             mNotificationManager.createNotificationChannel(iNotificationChannel)
         }
-
-
         mNotificationManager.notify(Random.nextInt(5), iNotification.build())
-
-
     }
 
 
@@ -120,9 +148,7 @@ class FirebaseService : FirebaseMessagingService() {
         iRemoteView.setTextViewText(R.id.mTitle, pTitle)
         iRemoteView.setTextViewText(R.id.mMessage, pMessage)
         iRemoteView.setImageViewResource(R.id.mSmallIcon, R.drawable.logo)
-
         return iRemoteView
-
     }
 
 
@@ -137,5 +163,82 @@ class FirebaseService : FirebaseMessagingService() {
         wl.acquire(10 * 60 * 1000L)
         //釋放資源
         wl.release()
+    }
+
+
+    private fun goToDetailPage(
+        mFirebasePageTitle: String, mFirebasePageCode: Int,
+    ) {
+        Thread { mCallApi(mFirebasePageTitle, mFirebasePageCode) }.start()
+    }
+
+    private fun mCallApi(pTitle: String, pPageCode: Int) {
+        val mCallDetail: Call<JsonObject>?
+        val mZooApiService: ZooApiService =
+            RetrofitManager().getInstance()!!.createService(ZooApiService::class.java)
+        val mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
+        var iApiSelectTitle = ""
+
+
+        when (pTitle) {
+            "Animal" -> iApiSelectTitle = mUtilCommonStr.mAnimal
+            "Plant" -> iApiSelectTitle = mUtilCommonStr.mPlant
+            "OutSideArea" -> {
+                iApiSelectTitle = mUtilCommonStr.mOutSideArea
+                mFcmFromInDepartmentBackPage = true
+            }
+            "InSideArea" -> {
+                iApiSelectTitle = mUtilCommonStr.mInSideArea
+                mFcmFromInDepartmentBackPage = true
+            }
+        }
+
+        mCallDetail = when (pTitle) {
+            "Animal" -> {
+                mZooApiService.getAnimalData(1, pPageCode)
+            }
+            "Plant" -> {
+                mZooApiService.getPlantData(1, pPageCode)
+            }
+            else -> {
+                mZooApiService.getPavilionData(iApiSelectTitle, 1, pPageCode)
+            }
+        }
+
+
+        mIntent = Intent(this, DetailActivity::class.java)
+
+
+        mCallDetail.enqueue(object : Callback<JsonObject?> {
+            override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
+                try {
+
+                    val iListData: ArrayList<ListData> = ArrayList<ListData>()
+                    assert(response.body() != null)
+                    val ix = JSONObject(response.body().toString())
+                    val iz = ix.getJSONObject("result").getJSONArray("results")
+                    val iData = ListData()
+                    iData.setData(iz.getJSONObject(0))
+                    iData.selectType(iApiSelectTitle, false)
+                    iListData.add(iData)
+
+
+                    mBundle.putString("TitleName", iApiSelectTitle)
+                    mBundle.putString("ListData", iListData[0].getRawData())
+                    mIntent.putExtras(mBundle)
+                    sendNotification(pTitle, pPageCode)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    if (e.toString() == "org.json.JSONException: Index 0 out of range [0..0)"){
+                        Log.d("FirebaseFcmErrorMessage", e.toString())
+
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                Log.d("callApiError", t.toString())
+            }
+        })
     }
 }

@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFcmFromInDepartmentBackPage
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Util.ProgressDialogCustom
@@ -89,8 +90,14 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             when (mFirebasePageTitle) {
                 "Animal" -> mTitleStr = mUtilCommonStr.mAnimal
                 "Plant" -> mTitleStr = mUtilCommonStr.mPlant
-                "OutSideArea" -> mTitleStr = mUtilCommonStr.mOutSideArea
-                "InSideArea" -> mTitleStr = mUtilCommonStr.mInSideArea
+                "OutSideArea" -> {
+                    mTitleStr = mUtilCommonStr.mOutSideArea
+                    mFcmFromInDepartmentBackPage = true
+                }
+                "InSideArea" -> {
+                    mTitleStr = mUtilCommonStr.mInSideArea
+                    mFcmFromInDepartmentBackPage = true
+                }
             }
         }
     }

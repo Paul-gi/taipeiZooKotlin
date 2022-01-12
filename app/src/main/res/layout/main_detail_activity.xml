@@ -49,8 +49,6 @@
                 layout="@layout/detail_below_part">
             </include>
 
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </layout>

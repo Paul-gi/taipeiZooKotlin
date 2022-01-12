@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taipeizookotlin.Adapter.GoogleMapGeoAdapter
 import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.DataList.LocationPositionData
+import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebaseHavePageCode
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
+import com.example.taipeizookotlin.Room.AppDataBase
+import com.example.taipeizookotlin.Room.User
 import com.example.taipeizookotlin.Util.UtilCommonStr
 import com.example.taipeizookotlin.Util.UtilTools
 import com.example.taipeizookotlin.databinding.MainDetailActivityBinding
@@ -19,7 +22,6 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity() {
 
-    private var mBundle: Bundle? = null
     private var mTitle: String? = null
     private var mListData: ListData = ListData()
     private var mLocationPositionData: LocationPositionData = LocationPositionData()
@@ -35,12 +37,13 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.main_detail_activity)
+
         getBundleData()
-        when {
-            mTitle == UtilCommonStr.getInstance().mAnimal -> {
+        when (mTitle) {
+            UtilCommonStr.getInstance().mAnimal -> {
                 initAnimalView()
             }
-            mBundle!!.getString("TitleName") == UtilCommonStr.getInstance().mPlant -> {
+            UtilCommonStr.getInstance().mPlant -> {
                 initPlantView()
             }
             else -> {
@@ -53,9 +56,28 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getBundleData() {
-        mBundle = intent.extras
-        mTitle = mBundle!!.getString("TitleName")
-        mTitle?.let { mListData.setRawJson(it, mBundle!!.getString("ListData")) }
+        val mBundle: Bundle = intent.extras!!
+        mTitle = mBundle.getString("TitleName")
+        mTitle?.let {
+            mListData.setRawJson(it, mBundle!!.getString("ListData"))
+        }
+    }
+
+    private fun setRoom() {
+        Thread {
+            val mApDataBase: AppDataBase? = this.let { AppDataBase.getInstance(it) }
+            mApDataBase?.userDao()?.insertUser(
+                User().apply {
+                    pageName = mTitle
+                    clickPosition = mFirebasePageCode
+                    EnglishName = mListData.getEnglishName()
+                    ChineseName = mListData.getChineseName()
+                }
+            )
+            if (mFirebaseHavePageCode) {
+                mFirebasePageCode = -2
+            }
+        }.start()
     }
 
 
@@ -174,32 +196,13 @@ class DetailActivity : AppCompatActivity() {
             }
         }
         mDataBinding.mTitleBar.mBackBtn.setOnClickListener {
-            if (mFirebasePageCode == -2) {
-                fromFcmPageCode()
-            }else{
-                this.finish()
-            }
+            setRoom()
+            onBackPressed()
         }
-
     }
 
     override fun onBackPressed() {
-        if (mFirebasePageCode == -2) {
-            fromFcmPageCode()
-        }else{
-            this.finish()
-        }
-    }
-
-    private fun fromFcmPageCode(){
-        mFirebasePageCode = null
-        val intent = Intent()
-        val bundle = Bundle()
-        bundle.putBoolean("isFromFCMPageCode", true)
-        bundle.putString("mFirebasePageTitle", mFirebasePageTitle)
-        intent.setClass(this@DetailActivity, MainActivity::class.java)
-        intent.putExtras(bundle)
-        this.finish()
-        startActivity(intent)
+        super.onBackPressed()
+        setRoom()
     }
 }

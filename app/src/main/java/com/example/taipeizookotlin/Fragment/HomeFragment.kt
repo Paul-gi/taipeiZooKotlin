@@ -113,15 +113,4 @@ class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
             UtilCommonStr.getInstance().mOutSideArea
         mDataBinding.mDepartmentNavigationIC.root.visibility = View.VISIBLE
     }
-
-//    private fun fcmFromDepartmentBack() {
-//        if (mFcmFromInDepartmentBackPage) {
-//            mDataBinding.mAllAreaNavigationIC.root.visibility = View.GONE
-//            mDataBinding.mDepartmentNavigationIC.root.visibility = View.VISIBLE
-//            mFcmFromInDepartmentBackPage = false
-//        } else {
-//            mDataBinding.mAllAreaNavigationIC.root.visibility = View.VISIBLE
-//            mDataBinding.mDepartmentNavigationIC.root.visibility = View.GONE
-//        }
-//    }
 }

@@ -72,7 +72,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
                     mProgressDialogCustom!!.show(parentFragmentManager, "")
                     callApiThread()
                 } else {
-                    if(mFirebasePageCode == -1){
+                    mFirebasePageCode.let {
                         Toast.makeText(activity, "到底了", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -93,5 +93,4 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
     private fun callApiThread() {
         Thread { mCallViewModel.mCallApi(mTitleStr) }.start()
     }
-
 }
