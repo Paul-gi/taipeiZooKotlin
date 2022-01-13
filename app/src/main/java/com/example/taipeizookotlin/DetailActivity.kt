@@ -3,6 +3,7 @@ package com.example.taipeizookotlin
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,7 +13,6 @@ import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.DataList.LocationPositionData
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebaseHavePageCode
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
-import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.Room.AppDataBase
 import com.example.taipeizookotlin.Room.User
 import com.example.taipeizookotlin.Util.UtilCommonStr
@@ -37,7 +37,8 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.main_detail_activity)
-
+        Log.v("aaa", "DetailActivity")
+        return
         getBundleData()
         when (mTitle) {
             UtilCommonStr.getInstance().mAnimal -> {
@@ -56,10 +57,16 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getBundleData() {
-        val mBundle: Bundle = intent.extras!!
-        mTitle = mBundle.getString("TitleName")
+//        val mBundle: Bundle? = intent.extras
+//        if (mBundle != null) {
+//            mTitle?.let {
+//                mTitle = mBundle.getString("TitleName")
+//                mListData.setRawJson(it, mBundle.getString("ListData"))
+//            }
+//        }
+        mTitle = intent.extras?.getString("TitleName")
         mTitle?.let {
-            mListData.setRawJson(it, mBundle!!.getString("ListData"))
+            mListData.setRawJson(it, intent.extras?.getString("ListData"))
         }
     }
 
@@ -198,11 +205,13 @@ class DetailActivity : AppCompatActivity() {
         mDataBinding.mTitleBar.mBackBtn.setOnClickListener {
             setRoom()
             onBackPressed()
+            this.finish()
         }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         setRoom()
+        this.finish()
     }
 }
