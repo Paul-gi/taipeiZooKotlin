@@ -44,7 +44,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             }
             // Get new FCM registration token
             val token = task.result
-            Log.d("aaa", token.toString())
+            Log.d("firebaseToken", token.toString())
         })
 
 
@@ -114,7 +114,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     }
 
 
-    fun fragmentBackPressed(pFragment: Fragment?) {
+     fun fragmentBackPressed(pFragment: Fragment?) {
         if (mFirebasePageTitle != "") {
             if (pFragment != null) {
                 onBackPressOpenHomePage(pFragment)
@@ -124,7 +124,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         }
     }
 
-    fun fragmentUseFcmBackPressed(pFragment: Fragment, pFragmentActivity: FragmentActivity) {
+     fun fragmentUseFcmBackPressed(pFragment: Fragment, pFragmentActivity: FragmentActivity) {
         pFragmentActivity
             .onBackPressedDispatcher
             .addCallback(this, object : OnBackPressedCallback(true) {
@@ -139,9 +139,10 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
 //                    }
                 }
             })
+
     }
 
-    fun onBackPressOpenHomePage(pFragment: Fragment) {
+     fun onBackPressOpenHomePage(pFragment: Fragment) {
         if (mFirebasePageTitle != "") {
             mFirebasePageTitle = ""
             parentFragmentManager.beginTransaction()
@@ -154,8 +155,14 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
                 .addToBackStack(null)
                 .remove(pFragment)
                 .commit()
-        } else {
-            fragmentBackPressed(null)
+            //pFragment.activity?.finish()
+
+//        } else {
+           // fragmentBackPressed(parentFragment)
+
+        }else
+        {
+            parentFragmentManager.popBackStack()
         }
     }
 }

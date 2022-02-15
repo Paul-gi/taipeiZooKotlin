@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.taipeizookotlin.R
 
 
-class ProgressDialogCustom(var mContext: Context) : DialogFragment() {
+class ProgressDialogCustom(private var mContext: Context) : DialogFragment() {
     private var mDialog: Dialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,

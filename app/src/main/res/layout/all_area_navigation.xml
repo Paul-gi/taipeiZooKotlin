@@ -43,6 +43,17 @@
                 android:textColor="@color/black"
                 android:text="植物區" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mTextViewTest"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/yellow"
+                android:foreground="@drawable/button_radius"
+                android:text="文字測試"
+                android:textColor="@color/black"
+                />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

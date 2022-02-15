@@ -3,11 +3,15 @@
 package com.example.taipeizookotlin.Fragment
 
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taipeizookotlin.Adapter.ListDataAdapter
 import com.example.taipeizookotlin.DataList.ListData
+import com.example.taipeizookotlin.Firebase.FirebaseService
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Viewmodel.CallViewModel
@@ -45,6 +49,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
             fragmentBackPressed(this)
         }
 
+        fragmentUseFcmBackPressed(this, this.requireActivity())
 
         mDataBinding.mRecycleView.adapter = mListDataAdapter
         mDataBinding.mToolbarLayout.mChange.setOnClickListener {
@@ -61,7 +66,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
             mDataBinding.mRecycleView.adapter = mListDataAdapter
         }
 
-        fragmentUseFcmBackPressed(this, this.requireActivity())
+
         //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
 
@@ -93,4 +98,6 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
     private fun callApiThread() {
         Thread { mCallViewModel.mCallApi(mTitleStr) }.start()
     }
+
+
 }

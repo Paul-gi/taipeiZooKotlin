@@ -3,16 +3,19 @@
 package com.example.taipeizookotlin.Fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFcmFromInDepartmentBackPage
 import com.example.taipeizookotlin.R
+import com.example.taipeizookotlin.textviewSet.TextViewSetting
 import com.example.taipeizookotlin.Util.UtilCommonStr
 import com.example.taipeizookotlin.databinding.AllAreaNavigationBinding
 import com.example.taipeizookotlin.databinding.DepartmentNavigationBinding
 import com.example.taipeizookotlin.databinding.HomeFragmentBinding
 
-class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
+class HomeFragment : BaseFragment<HomeFragmentBinding>() {
 
 
     override val mLayout: Int
@@ -55,6 +58,10 @@ class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
                     }
                 }
             })
+
+        mDataBinding.mAllAreaNavigationIC.mTextViewTest.setOnClickListener {
+            openTextviewSettingPage(this.requireActivity())
+        }
     }
 
     private fun secondPage(pDepartmentNavigationIC: DepartmentNavigationBinding) {
@@ -92,7 +99,7 @@ class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
     }
 
     private fun openHomePage() {
-        mDataBinding.mZooLogoImage.visibility = View.VISIBLE
+       // mDataBinding.mZooLogoImage.visibility = View.VISIBLE
         mDataBinding.mAllAreaNavigationIC.root.visibility = View.VISIBLE
 
         mDataBinding.mToolbarLayout.root.visibility = View.GONE
@@ -100,7 +107,7 @@ class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
     }
 
     private fun openDepartmentPage() {
-        mDataBinding.mZooLogoImage.visibility = View.GONE
+        //mDataBinding.mZooLogoImage.visibility = View.GONE
         mDataBinding.mToolbarLayout.mToolbar.title = "館區簡介"
         mDataBinding.mToolbarLayout.mChange.visibility = View.GONE
         mDataBinding.mAllAreaNavigationIC.root.visibility = View.GONE
@@ -112,5 +119,12 @@ class HomeFragment() : BaseFragment<HomeFragmentBinding>() {
         mDataBinding.mDepartmentNavigationIC.mOutDoorAreaBtn.text =
             UtilCommonStr.getInstance().mOutSideArea
         mDataBinding.mDepartmentNavigationIC.root.visibility = View.VISIBLE
+    }
+
+
+    private fun openTextviewSettingPage(mActivity: Activity) {
+        val iIntent = Intent()
+        iIntent.setClass(mActivity, TextViewSetting::class.java)
+        startActivity(iIntent)
     }
 }

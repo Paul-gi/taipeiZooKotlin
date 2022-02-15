@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/dogwalkone" android:duration="250" />
+    <item android:drawable="@drawable/dogwalktwo" android:duration="250" />
+    <item android:drawable="@drawable/dogwalkthree" android:duration="250" />
+    <item android:drawable="@drawable/dogwalkfour" android:duration="250" />
+    <item android:drawable="@drawable/dogwalkfive" android:duration="250" />
+    <item android:drawable="@drawable/dogwalksix" android:duration="250" />
+</animation-list>

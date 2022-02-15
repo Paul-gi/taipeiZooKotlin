@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!--參考來源https://www.itread01.com/articles/1476858370.html-->
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/yellow"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/mTitleBar"
+                layout="@layout/toolbar_layout"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mCompound_Drawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="1dp"
+                android:text="Animation"
+                app:drawableBottomCompat="@drawable/dogdrawablelist"
+                app:drawableLeftCompat="@drawable/rotating_loading"
+                app:drawableRightCompat="@drawable/wifidrawalbelist" />
+
+
+            <!--註意，shadowDx，shadowDy，shadowRadius 的值的單位是
+             px，而非 dp。為了讓陰影完全顯示，記得設置合適的 padding。-->
+            <TextView
+                android:id="@+id/mShadow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:shadowColor="#7000"
+                android:shadowDx="12"
+                android:shadowDy="12"
+                android:shadowRadius="8"
+                android:text="Shadow"
+                android:textSize="80sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:shadowColor="#00F0F0"
+                android:shadowDx="4"
+                android:shadowDy="-4"
+                android:shadowRadius="1"
+                android:text="Block"
+                android:textColor="#0F0F0F"
+                android:textSize="80sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/black"
+                android:padding="12dp"
+                android:shadowColor="@color/yellow"
+                android:shadowDx="12"
+                android:shadowDy="12"
+                android:shadowRadius="8"
+                android:text="Glow"
+                android:textColor="@android:color/white"
+                android:textSize="80sp"
+                android:textStyle="bold" />
+            <!-- android:shadowDx="12"
+                 android:shadowDy="12"
+                 android:shadowRadius="8"-->
+
+            <TextView
+                android:id="@+id/mCustomFont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="50dp" />
+
+
+            <TextView
+                android:id="@+id/mGradient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="50dp" />
+
+            <TextView
+                android:id="@+id/mCheetah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textSize="50dp" />
+
+            <TextView
+                android:id="@+id/mFromHtml"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/mlinkTwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/mFractionSpan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/mSpanArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/mRainBowText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="40dp" />
+
+            <TextView
+                android:id="@+id/mRainBow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="It is a RainBow "
+                android:textSize="40dp" />
+
+
+            <TextView
+                android:id="@+id/mAnimationRainbow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="AnimationRainbow"
+                android:gravity="center"
+                android:textSize="40dp" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <com.example.taipeizookotlin.textviewSet.LinedEditText
+                    android:id="@+id/mEditLinedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="djgirjigojrijgioerj"
+                    android:textSize="30dp"
+                    android:background="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText,MissingConstraints,SpUsage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/mEmoji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/mLowArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/mLeadingMarginSpan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/mQuoteSpan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/mAlignmentSpanA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/mAlignmentSpanB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="20dp" />
+
+
+            <TextView
+                android:id="@+id/mAlignmentSpanC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="20dp" />
+
+
+            <TextView
+                android:id="@+id/mAlignmentSpanOPPOSITE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="20dp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</layout>
+
