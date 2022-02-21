@@ -11,6 +11,13 @@
     <string name="FCMToken">fcmToken</string>
     <string name="AnimationRainbow">AnimationRainbow</string>
 
+    <string name="fraction_text">
+            <![CDATA[
+                1<afrc>1/2</afrc> + <afrc>11/16</afrc>
+                = 2<afrc>3/16</afrc>
+                ]]>
+    </string>
+
 
     <color name="bright_pink">#FF007F</color>
     <color name="red">#FF0000</color>
@@ -48,12 +55,12 @@
         <item>@color/purple_200</item>
     </integer-array>
 
-<!--    <animationDog-list>-->
-<!--        <item android:drawable="@drawable/dogwalkone" android:duration="250" />-->
-<!--        <item android:drawable="@drawable/dogwalktwo" android:duration="250" />-->
-<!--        <item android:drawable="@drawable/dogwalkthree" android:duration="250" />-->
-<!--        <item android:drawable="@drawable/dogwalkfour" android:duration="250" />-->
-<!--        <item android:drawable="@drawable/dogwalkfive" android:duration="250" />-->
-<!--        <item android:drawable="@drawable/dogwalksix" android:duration="250" />-->
-<!--    </animationDog-list>-->
+    <!--    <animationDog-list>-->
+    <!--        <item android:drawable="@drawable/dogwalkone" android:duration="250" />-->
+    <!--        <item android:drawable="@drawable/dogwalktwo" android:duration="250" />-->
+    <!--        <item android:drawable="@drawable/dogwalkthree" android:duration="250" />-->
+    <!--        <item android:drawable="@drawable/dogwalkfour" android:duration="250" />-->
+    <!--        <item android:drawable="@drawable/dogwalkfive" android:duration="250" />-->
+    <!--        <item android:drawable="@drawable/dogwalksix" android:duration="250" />-->
+    <!--    </animationDog-list>-->
 </resources>

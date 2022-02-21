@@ -26,11 +26,14 @@ class AnimatedColorSpan(mContext: Context) : CharacterStyle(),
                 Shader.TileMode.MIRROR
             )
         }
-        matrix.reset()
-        matrix.setRotate(90f)
-        matrix.postTranslate(width * translateXPercentage, 0f)
-        shader!!.setLocalMatrix(matrix)
-        paint.shader = shader
+        val iShader = shader
+        if( iShader != null) {
+            matrix.reset()
+            matrix.setRotate(90f)
+            matrix.postTranslate(width * translateXPercentage, 0f)
+            iShader.setLocalMatrix(matrix)
+            paint.shader = iShader
+        }
     }
 
 }

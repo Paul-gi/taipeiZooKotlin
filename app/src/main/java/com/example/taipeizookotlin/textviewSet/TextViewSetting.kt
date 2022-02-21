@@ -55,17 +55,20 @@ class TextViewSetting : AppCompatActivity() {
     private fun initView() {
         mDataBinding.mTitleBar.mToolbar.title = "TextView變形"
         mDataBinding.mTitleBar.mChange.visibility = View.GONE
-       // mCompoundDrawable()
+        // mCompoundDrawable()
         mCustomFont()
         mGradient()
         mCheetah()
         mFromHtml()
         mLinkTwo()
+        //todo 分數不太對
         mFractionSpan()
+        //todo 其中一個沒有動作
         mSpanArticle()
         funRainbowOneText(this)
         funRainbowTwoText()
-        //  funAnimationRainbowText()
+        funAnimationRainbowText()
+        funReplacementSpan()
         funEmojiSpan()
         mLowArticle()
         mLeadingMarginSpan()
@@ -80,7 +83,12 @@ class TextViewSetting : AppCompatActivity() {
 
 
     /**
-     *
+     * 動畫的部分
+     * Operation
+     * mCompoundDrawable
+     * onStart
+     * onStop
+     * startAnimation
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun mCompoundDrawable(operation: Operation) {
@@ -113,6 +121,7 @@ class TextViewSetting : AppCompatActivity() {
             }
         }
     }
+
     override fun onStart() {
         super.onStart()
         mCompoundDrawable(Operation.START)
@@ -225,13 +234,19 @@ class TextViewSetting : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun mFractionSpan() {
         val iTypeface =
-            ResourcesCompat.getFont(this, com.example.taipeizookotlin.R.font.nutso2)
+            ResourcesCompat.getFont(this, com.example.taipeizookotlin.R.font.icomoon)
         mDataBinding.mFractionSpan.typeface = iTypeface
-        val iHtmlString =
+        mDataBinding.mFractionSpanTwo.typeface = ResourcesCompat.getFont(this,com.example.taipeizookotlin.R.font.nutso2)
+        val iString =
             "3<sup>1</sup>/<sub>2</sub>+</sub>8<sup>4</sup>/<sub>5</sub>=</sub>我懶得算XD</sub>\n" +
                     "777</sup>/<sub>8888</sub> </sub>6666</sup>/<sub>1111111</sub>"
+
+        val iHtmlStringTwo = getString(com.example.taipeizookotlin.R.string.fraction_text)
         mDataBinding.mFractionSpan.text =
-            Html.fromHtml(iHtmlString, Html.FROM_HTML_MODE_LEGACY, null, FractionTagHandler())
+            Html.fromHtml(iString, Html.FROM_HTML_MODE_LEGACY, null, FractionTagHandler())
+
+        mDataBinding.mFractionSpanTwo.text =
+            Html.fromHtml(iHtmlStringTwo, Html.FROM_HTML_MODE_LEGACY, null, FractionTagHandler())
     }
 
 
@@ -307,13 +322,13 @@ class TextViewSetting : AppCompatActivity() {
             215,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        //todo 藍色前景色+加粗樣式 沒動作 over the的the
-        iString.setSpan(
-            MaskFilterSpan(EmbossMaskFilter(floatArrayOf(2f, 2f, 2f), 0.4f, 6F, 3.5f)),
-            217,
-            220,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+//        //todo 藍色前景色+加粗樣式 沒動作 over the的the
+//        iString.setSpan(
+//            MaskFilterSpan(EmbossMaskFilter(floatArrayOf(2f, 2f, 2f), 0.4f, 6F, 3.5f)),
+//            217,
+//            220,
+//            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//        )
         mDataBinding.mSpanArticle.text = iString
     }
 
@@ -391,6 +406,7 @@ class TextViewSetting : AppCompatActivity() {
         val objectAnimator = ObjectAnimator.ofFloat(
             pAnimationRainbowSpan, ANIMATED_COLOR_SPAN_FLOAT_PROPERTY, 0f, 100f
         )
+
         objectAnimator.setEvaluator(FloatEvaluator())
         objectAnimator.addUpdateListener { mDataBinding.mAnimationRainbow.text = spannableString }
         objectAnimator.interpolator = LinearInterpolator()
@@ -399,20 +415,43 @@ class TextViewSetting : AppCompatActivity() {
         objectAnimator.start()
     }
 
-    private var ANIMATED_COLOR_SPAN_FLOAT_PROPERTY: Property<AnimatedColorSpan?, Float> =
-        object : Property<AnimatedColorSpan?, Float>(
+    private var ANIMATED_COLOR_SPAN_FLOAT_PROPERTY: Property<AnimatedColorSpan, Float> =
+        object : Property<AnimatedColorSpan, Float>(
             Float::class.java, "ANIMATED_COLOR_SPAN_FLOAT_PROPERTY"
         ) {
-            operator fun set(span: AnimatedColorSpan, value: Float?) {
-                if (value != null) {
-                    span.translateXPercentage = value
-                }
+//            operator fun set(span: AnimatedColorSpan, value: Float) {
+//                span.translateXPercentage = value
+//            }
+//
+//            override fun get(span: AnimatedColorSpan): Float {
+//                return span.translateXPercentage
+//            }
+
+
+            override fun get(span: AnimatedColorSpan): Float {
+                return span.translateXPercentage
             }
 
-            override fun get(span: AnimatedColorSpan?): Float? {
-                return span?.translateXPercentage
+            override fun set(span: AnimatedColorSpan, value: Float) {
+//                super.set(span, value)
+                span.translateXPercentage = value
             }
         }
+
+
+    /**
+     * 自定義矇版 屏障
+     */
+    private fun funReplacementSpan() {
+        val iSpannableText: Spannable = SpannableString(
+            "一如站在一面鏡子前，不管是正對或背對，呈現的只是個人的鏡象。\n" +
+                    "\n" +
+                    "你面對或逃避，終究只是自已。"
+        )
+        iSpannableText.setSpan(RePlacementSpan(), 5, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mDataBinding.mReplacementSpan.text = iSpannableText
+    }
+
 
     /**
      * 插入符號
@@ -420,7 +459,7 @@ class TextViewSetting : AppCompatActivity() {
     @SuppressLint("ResourceType", "SetTextI18n")
     private fun funEmojiSpan() {
         mDataBinding.mEmoji.text =
-            "By training your thoughts to concentrate on the bright :octopus: " +
+            "By training your thoughts to concentrate ⛷ ⛷ on the bright :octopus: " +
                     "side of things, :octopus: you are more likely to have the incentive to :octopus: follow through on your goals. " +
                     "You are less likely :octopus: to be held back by negative :octopus: ideas that might limit your performance."
         val text: String = mDataBinding.mEmoji.text.toString()
@@ -432,7 +471,7 @@ class TextViewSetting : AppCompatActivity() {
         var matcher: Matcher = pattern.matcher(text)
         while (matcher.find()) {
             val foregroundColorSpan = ForegroundColorSpan(
-                resources.getColor(Color.BLUE, null)
+                resources.getColor(com.example.taipeizookotlin.R.color.blue, null)
             )
             val iconFontSpan = IconFontSpan(mDataBinding.mEmoji.context)
             spannableString.setSpan(iconFontSpan, matcher.start(), matcher.end(), 0)

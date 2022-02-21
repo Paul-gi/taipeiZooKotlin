@@ -13,9 +13,9 @@ class FractionTagHandler : Html.TagHandler {
         output: Editable?,
         xmlReader: XMLReader?,
     ) {
-//        if (!"afrc".equals(attr.tag, ignoreCase = true)) {
-//            return
-//        }
+        if (!"afrc".equals(tag, ignoreCase = true)) {
+            return
+        }
 
         val len: Int = output!!.length
         if (opening) {
