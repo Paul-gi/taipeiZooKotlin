@@ -447,6 +447,7 @@ class TextViewSetting : AppCompatActivity() {
     /**
      * 自定義矇版 屏障
      */
+    @SuppressLint("ResourceAsColor")
     private fun funReplacementSpan() {
         val iSpannableText: Spannable = SpannableString(
             "一如站在一面鏡子前，不管是正對或背對，呈現的只是個人的鏡象。\n" +

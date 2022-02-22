@@ -1,12 +1,14 @@
 package com.example.taipeizookotlin.textviewSet
 
+import android.annotation.SuppressLint
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.text.style.ReplacementSpan
 
 class RePlacementSpan : ReplacementSpan() {
-     var mWidth: Int = 0
-     var mPaint: Paint? = null
+    var mWidth: Int = 0
+    var mPaint: Paint? = Paint()
     override fun getSize(
         paint: Paint,
         text: CharSequence?,
@@ -19,6 +21,7 @@ class RePlacementSpan : ReplacementSpan() {
         return this.mWidth
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun draw(
         canvas: Canvas,
         text: CharSequence?,
@@ -30,9 +33,13 @@ class RePlacementSpan : ReplacementSpan() {
         bottom: Int,
         paint: Paint
     ) {
-        // draw the frame with custom Paint
+
         mPaint?.let {
-            canvas.drawRect(x, top.toFloat(), x + mWidth.toFloat(), bottom.toFloat(),
+            it.strokeWidth = 4f
+            it.style = Paint.Style.STROKE
+            it.color = Color.BLUE
+            canvas.drawRect(
+                x, 1 + top.toFloat(), x + mWidth.toFloat(), bottom.toFloat(),
                 it
             )
         }
