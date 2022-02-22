@@ -35,7 +35,7 @@ import com.example.taipeizookotlin.databinding.TextviewsettingMainBinding
 /**
  * 參考來源：https://www.itread01.com/articles/1476858370.html
  *         https://blog.csdn.net/zhaizu/article/details/52740642
- *         git:https://github.com/chiuki/advanced-textview/tree/master/app/src/main/java/com/sqisland/android/advanced_textview
+ *         git: https://github.com/chiuki/advanced-textview/tree/master/app/src/main/java/com/sqisland/android/advanced_textview
  */
 class TextViewSetting : AppCompatActivity() {
 
@@ -88,7 +88,8 @@ class TextViewSetting : AppCompatActivity() {
      * mCompoundDrawable
      * onStart
      * onStop
-     * startAnimation
+     * startAnimation：clock
+     *                 face: https://github.com/chiuki/animated-vector-drawable/blob/master/app/src/main/res/values/strings.xml
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun mCompoundDrawable(operation: Operation) {
@@ -96,14 +97,18 @@ class TextViewSetting : AppCompatActivity() {
             resources.getDrawable(com.example.taipeizookotlin.R.drawable.dogdrawablelist, null)
         val iAnimatedWifi =
             resources.getDrawable(com.example.taipeizookotlin.R.drawable.wifidrawalbelist, null)
-        val iRotatingLoading =
-            resources.getDrawable(com.example.taipeizookotlin.R.drawable.rotating_loading, null)
+        val iClockAnimation =
+            resources.getDrawable(com.example.taipeizookotlin.R.drawable.time_animation, null)
+        val iSmileFaceAnimation =
+            resources.getDrawable(com.example.taipeizookotlin.R.drawable.smileface,null)
+
         iAnimatedClock.setBounds(0, 0, 200, 200)
         iAnimatedWifi.setBounds(0, 0, 200, 200)
-        iRotatingLoading.setBounds(0, 0, 200, 200)
+        iClockAnimation.setBounds(0, 0, 200, 200)
+        iSmileFaceAnimation.setBounds(0,0,200,200)
         mDataBinding.mCompoundDrawable.setCompoundDrawables(
-            iRotatingLoading,
-            null,
+            iClockAnimation,
+            iSmileFaceAnimation,
             iAnimatedWifi,
             iAnimatedClock
         )
