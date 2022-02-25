@@ -120,11 +120,13 @@ class ListDataAdapter(
         val iData: ListData = mZooDataList[pPosition]
         val iIntent = Intent()
         val iBundle = Bundle()
-        iIntent.setClass(pContent!!, DetailActivity::class.java)
-        iBundle.putString("TitleName", mTitleName)
-        iBundle.putString("ListData", iData.getRawData())
-        iIntent.putExtras(iBundle)
-        context.startActivity(iIntent)
+        if (pContent != null) {
+            iIntent.setClass(pContent, DetailActivity::class.java)
+            iBundle.putString("TitleName", mTitleName)
+            iBundle.putString("ListDataAdapterListData", iData.getRawData())
+            iIntent.putExtras(iBundle)
+            context.startActivity(iIntent)
+        }
     }
 
     interface ListDataItf {

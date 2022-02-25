@@ -1,11 +1,14 @@
 package com.example.taipeizookotlin.Util
+
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.PowerManager
 import android.text.method.ScrollingMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
@@ -197,4 +200,21 @@ class UtilTools {
             false
         }
     }
+
+
+    /**
+     * 喚醒手機
+     */
+    @SuppressLint("InvalidWakeLockTag")
+    fun wakeUpPhone(iPowerManager: PowerManager) {
+        val wl = iPowerManager.newWakeLock(
+            PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.SCREEN_DIM_WAKE_LOCK,
+            "bright"
+        )
+        //開啟螢幕(10min)
+        wl.acquire(10 * 60 * 1000L)
+        //釋放資源
+        wl.release()
+    }
 }
+

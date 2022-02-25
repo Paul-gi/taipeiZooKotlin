@@ -15,7 +15,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFcmFromInDepartmentBackPage
-import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageTitle
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Util.ProgressDialogCustom
 import com.example.taipeizookotlin.Util.UtilCommonStr
@@ -26,9 +25,10 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     private var mTampDataBinding: dataBinding? = null
     protected val mDataBinding: dataBinding get() = mTampDataBinding!!
     var mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
-    var mTitleStr = "Title"
+    var mPageTitleStr = "Title"
     var mProgressDialogCustom: ProgressDialogCustom? = null
     abstract val mLayout: Int
+    var mFormFirebase = false
     //mInDepartmentPage 當推播去列表頁,點選回上一頁時要讓他正常回上一頁
 
 
@@ -74,28 +74,31 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         checkBundle()
     }
 
-    protected fun getTitleName(): String {
-        return mTitleStr
-    }
-
 
     private fun checkBundle() {
         val iBundle = arguments
         if (iBundle != null) {
-            mTitleStr = iBundle.getString(mUtilCommonStr.mKeyTitle, "")
+            mFormFirebase = iBundle.getBoolean("MainFromFireBase", false)
+
+            mPageTitleStr = if (mFormFirebase) {
+                iBundle.getString("MainFirebasePageTitle", "")
+            } else {
+                iBundle.getString(mUtilCommonStr.mKeyTitle, "")
+            }
         }
 
+
         //推播導頁
-        if (mFirebasePageTitle != "" || !mFirebasePageTitle.equals(null)) {
-            when (mFirebasePageTitle) {
-                "Animal" -> mTitleStr = mUtilCommonStr.mAnimal
-                "Plant" -> mTitleStr = mUtilCommonStr.mPlant
+        if (mPageTitleStr != "" || !mPageTitleStr.equals(null)) {
+            when (mPageTitleStr) {
+                "Animal" -> mPageTitleStr = mUtilCommonStr.mAnimal
+                "Plant" -> mPageTitleStr = mUtilCommonStr.mPlant
                 "OutSideArea" -> {
-                    mTitleStr = mUtilCommonStr.mOutSideArea
+                    mPageTitleStr = mUtilCommonStr.mOutSideArea
                     mFcmFromInDepartmentBackPage = true
                 }
                 "InSideArea" -> {
-                    mTitleStr = mUtilCommonStr.mInSideArea
+                    mPageTitleStr = mUtilCommonStr.mInSideArea
                     mFcmFromInDepartmentBackPage = true
                 }
             }
@@ -114,8 +117,8 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     }
 
 
-     fun fragmentBackPressed(pFragment: Fragment?) {
-        if (mFirebasePageTitle != "") {
+    fun fragmentBackPressed(pFragment: Fragment?) {
+        if (mPageTitleStr != "") {
             if (pFragment != null) {
                 onBackPressOpenHomePage(pFragment)
             }
@@ -124,7 +127,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         }
     }
 
-     fun fragmentUseFcmBackPressed(pFragment: Fragment, pFragmentActivity: FragmentActivity) {
+    fun fragmentUseFcmBackPressed(pFragment: Fragment, pFragmentActivity: FragmentActivity) {
         pFragmentActivity
             .onBackPressedDispatcher
             .addCallback(this, object : OnBackPressedCallback(true) {
@@ -142,9 +145,9 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
 
     }
 
-     fun onBackPressOpenHomePage(pFragment: Fragment) {
-        if (mFirebasePageTitle != "") {
-            mFirebasePageTitle = ""
+    fun onBackPressOpenHomePage(pFragment: Fragment) {
+        if (mPageTitleStr != "") {
+            mPageTitleStr = ""
             parentFragmentManager.beginTransaction()
                 .replace(
                     R.id.mFragment,
@@ -158,10 +161,9 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             //pFragment.activity?.finish()
 
 //        } else {
-           // fragmentBackPressed(parentFragment)
+            // fragmentBackPressed(parentFragment)
 
-        }else
-        {
+        } else {
             parentFragmentManager.popBackStack()
         }
     }

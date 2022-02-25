@@ -3,16 +3,11 @@
 package com.example.taipeizookotlin.Fragment
 
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taipeizookotlin.Adapter.ListDataAdapter
 import com.example.taipeizookotlin.DataList.ListData
-import com.example.taipeizookotlin.Firebase.FirebaseService
-import com.example.taipeizookotlin.Firebase.FirebaseService.Companion.mFirebasePageCode
 import com.example.taipeizookotlin.R
 import com.example.taipeizookotlin.Viewmodel.CallViewModel
 import com.example.taipeizookotlin.databinding.FragmentListPageBinding
@@ -33,7 +28,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
 
             }
 
-        }, requireContext(), mTitleStr, mPageState)
+        }, requireContext(), mPageTitleStr, mPageState)
     }
 
     override val mLayout: Int
@@ -44,7 +39,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
         mProgressDialogCustom!!.show(parentFragmentManager, "")
         mLinearLayoutManager = LinearLayoutManager(this.activity)
         mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
-        mDataBinding.mToolbarLayout.mToolbar.title = mTitleStr
+        mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
             fragmentBackPressed(this)
         }
@@ -77,9 +72,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
                     mProgressDialogCustom!!.show(parentFragmentManager, "")
                     callApiThread()
                 } else {
-                    mFirebasePageCode.let {
-                        Toast.makeText(activity, "到底了", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(activity, "到底了", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -96,7 +89,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
     }
 
     private fun callApiThread() {
-        Thread { mCallViewModel.mCallApi(mTitleStr) }.start()
+        Thread { mCallViewModel.mCallApi(mPageTitleStr) }.start()
     }
 
 
