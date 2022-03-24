@@ -8,7 +8,7 @@ import android.text.style.ReplacementSpan
 
 class RePlacementSpan : ReplacementSpan() {
     var mWidth: Int = 0
-    var mPaint: Paint? = Paint()
+    val mPaint: Paint = Paint()
     override fun getSize(
         paint: Paint,
         text: CharSequence?,
@@ -34,7 +34,7 @@ class RePlacementSpan : ReplacementSpan() {
         paint: Paint
     ) {
 
-        mPaint?.let {
+        mPaint.let {
             it.strokeWidth = 4f
             it.style = Paint.Style.STROKE
             it.color = Color.BLUE

@@ -9,9 +9,11 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.RemoteViews
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.taipeizookotlin.Firebase.TransformNotification
 import com.example.taipeizookotlin.Fragment.HomeFragment
 import com.example.taipeizookotlin.Fragment.ListPageFragment
@@ -24,33 +26,64 @@ class MainActivity : AppCompatActivity() {
     private var mFirebasePageTitle = ""
     private var mFirebasePageCode = -1
     private var mFromFireBase = false
+    private var mIndex = 0
 
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        getBundleData()
+        getBundleData(intent)
         selectPage()
-        // fcmTest()
-
-
+        fcmTest()
     }
 
     private fun selectPage() {
+
         if (mFirebasePageTitle != "" && mFirebasePageCode == -1) {
             val iBundle = Bundle()
             iBundle.putString("MainFirebasePageTitle", mFirebasePageTitle)
             iBundle.putBoolean("MainFromFireBase", mFromFireBase)
-            ListPageFragment().arguments = iBundle
-            this.supportFragmentManager.beginTransaction()
-                .add(
-                    R.id.mFragment,
-                    ListPageFragment().javaClass,
-                    iBundle,
-                    ListPageFragment::class.java.simpleName
-                )
-                .commit()
+
+            val iIndex = mIndex - 1
+            val iListPageFragTag = ListPageFragment::class.java.simpleName + ",mIndex=$iIndex"
+            var iFragmentTag: Fragment? = null
+            for (iTag in supportFragmentManager.fragments) {
+                if (iTag.tag != null && iTag.tag.toString() == iListPageFragTag && !iTag.isHidden) { // list
+                    iFragmentTag = iTag
+                    break
+                }
+                if (iTag.tag != null && iTag.tag.toString() == HomeFragment::class.java.simpleName && !iTag.isHidden) {// home
+                    iFragmentTag = iTag
+                    break
+                }
+            }
+
+            val iListPageFragment = iFragmentTag
+            if (iListPageFragment != null) {
+
+              //  mFragmentSet(ListPageFragment(),iBundle,ListPageFragment::class.java.simpleName + ",mIndex=$mIndex",iListPageFragment)
+                supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.mFragment,
+                        ListPageFragment().javaClass,
+                        iBundle,
+                        ListPageFragment::class.java.simpleName + ",mIndex=$mIndex"
+                    )
+                    .hide(iListPageFragment)
+                    .addToBackStack(null)
+                    .commit()
+
+            } else {
+                this.supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.mFragment,
+                        ListPageFragment().javaClass,
+                        iBundle,
+                        ListPageFragment::class.java.simpleName + ",mIndex=$mIndex"
+                    )
+                    .commit()
+            }
+            mIndex++
         } else {
             this.supportFragmentManager.beginTransaction()
                 .add(R.id.mFragment, HomeFragment(), HomeFragment::class.java.simpleName)
@@ -58,33 +91,53 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun mFragmentSet(
+        pAddFragment: Fragment,
+        @Nullable pBundle: Bundle,
+        @Nullable pFragmentTag: String,
+        @Nullable pHideFragment: Fragment
+    ) {
+        supportFragmentManager.beginTransaction()
+            .add(
+                R.id.mFragment,
+                pAddFragment.javaClass,
+                pBundle,
+                pFragmentTag
+            )
+            .hide(pHideFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        getBundleData()
+        getBundleData(intent)
         selectPage()
     }
 
-    private fun getBundleData() {
+    private fun getBundleData(pIntent: Intent?) {
         mFirebasePageTitle =
-            intent?.extras?.getString("TransformNotificationFirebasePageTitle") ?: ""
-        mFirebasePageCode = intent?.extras?.getInt("TransformNotificationFirebasePageCode") ?: -1
-        mFromFireBase = intent?.extras?.getBoolean("TransformNotificationFromFirebase") ?: false
+            pIntent?.extras?.getString("TransformNotificationFirebasePageTitle") ?: ""
+        mFirebasePageCode = pIntent?.extras?.getInt("TransformNotificationFirebasePageCode") ?: -1
+        mFromFireBase = pIntent?.extras?.getBoolean("TransformNotificationFromFirebase") ?: false
     }
 
 
-//    private fun fcmTest() {
-//        FirebaseService.mFirebasePageTitle = "Plant"
-//        FirebaseService.mFirebasePageCode = 3
-//        FirebaseService.mFirebaseHavePageCode = true
-//        checkNotification(
-//            FirebaseService.mFirebasePageTitle,
-//            FirebaseService.mFirebasePageCode
-//        )
-//    }
+    private fun fcmTest() {
+        checkNotification("Animal", -1)
+//        checkNotification("Plant", -1)
+//        checkNotification("OutSideArea", -1)
+    }
 
     @SuppressLint("UnspecifiedImmutableFlag")
     private fun checkNotification(pTitle: String, pPageCode: Int) {
+        val mBundle = Bundle()
         mIntent = Intent(this, TransformNotification::class.java)
+        mBundle.putString("FirebasePageTitle", pTitle)
+        mBundle.putInt("FirebasePageCode", pPageCode)
+        mIntent.putExtras(mBundle)
         sendNotification(pTitle, pPageCode)
     }
 

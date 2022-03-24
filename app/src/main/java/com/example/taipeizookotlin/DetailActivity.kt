@@ -14,6 +14,7 @@ import com.example.taipeizookotlin.Adapter.GoogleMapGeoAdapter
 import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.DataList.LocationPositionData
 import com.example.taipeizookotlin.Firebase.FirebaseService
+import com.example.taipeizookotlin.Fragment.BaseFragment.Companion.mPageStackCount
 import com.example.taipeizookotlin.Room.AppDataBase
 import com.example.taipeizookotlin.Room.User
 import com.example.taipeizookotlin.Service.RetrofitManager
@@ -104,6 +105,7 @@ class DetailActivity : AppCompatActivity() {
             mTitle = intent.extras?.getString("TransformNotificationFirebasePageTitle") ?: ""
             mFirebasePageCode =
                 intent?.extras?.getInt("TransformNotificationFirebasePageCode") ?: -1
+            mPageStackCount += 1
         } else {
             mTitle = intent.extras?.getString("TitleName") ?: ""
             mTitle.let {

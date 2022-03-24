@@ -44,7 +44,7 @@ class ListPageFragment : BaseFragment<FragmentListPageBinding>() {
             fragmentBackPressed(this)
         }
 
-        fragmentUseFcmBackPressed(this, this.requireActivity())
+        fragmentOnBackPressed(this, this.requireActivity())
 
         mDataBinding.mRecycleView.adapter = mListDataAdapter
         mDataBinding.mToolbarLayout.mChange.setOnClickListener {

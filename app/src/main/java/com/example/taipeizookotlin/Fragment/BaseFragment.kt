@@ -5,6 +5,8 @@ package com.example.taipeizookotlin.Fragment
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +31,10 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     var mProgressDialogCustom: ProgressDialogCustom? = null
     abstract val mLayout: Int
     var mFormFirebase = false
-    //mInDepartmentPage 當推播去列表頁,點選回上一頁時要讓他正常回上一頁
+
+    companion object {
+        var mPageStackCount = 0
+    }
 
 
     @SuppressLint("StringFormatInvalid")
@@ -80,10 +85,11 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         if (iBundle != null) {
             mFormFirebase = iBundle.getBoolean("MainFromFireBase", false)
 
-            mPageTitleStr = if (mFormFirebase) {
-                iBundle.getString("MainFirebasePageTitle", "")
+            if (mFormFirebase) {
+                mPageTitleStr = iBundle.getString("MainFirebasePageTitle", "")
+                mPageStackCount += 1
             } else {
-                iBundle.getString(mUtilCommonStr.mKeyTitle, "")
+                mPageTitleStr = iBundle.getString(mUtilCommonStr.mKeyTitle, "")
             }
         }
 
@@ -114,25 +120,43 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             .hide(this)
             .addToBackStack(null)
             .commit()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            for (iX in parentFragmentManager.fragments) {
+                Log.v("aaa", "ix=${iX.tag}")
+                Log.v("aaa", "ix=${iX.isHidden}")
+            }
+        }, 2000)
     }
 
 
     fun fragmentBackPressed(pFragment: Fragment?) {
         if (mPageTitleStr != "") {
             if (pFragment != null) {
-                onBackPressOpenHomePage(pFragment)
+                onBackOpenHomePage(pFragment)
             }
         } else {
             parentFragmentManager.popBackStack()
         }
     }
 
-    fun fragmentUseFcmBackPressed(pFragment: Fragment, pFragmentActivity: FragmentActivity) {
+    fun fragmentOnBackPressed(
+        pFragment: Fragment,
+        pFragmentActivity: FragmentActivity
+    ) {
+
         pFragmentActivity
             .onBackPressedDispatcher
             .addCallback(this, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    onBackPressOpenHomePage(pFragment)
+                    if (mPageStackCount > 1) {
+                        pFragmentActivity.supportFragmentManager.beginTransaction()
+                            .show(pFragment).commit()
+                        mPageStackCount -= 1
+                    } else {
+                        onBackOpenHomePage(pFragment)
+                    }
+
                     /**
                      * if you want onBackPressed() to be called as normal afterwards
                      */
@@ -142,10 +166,10 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
 //                    }
                 }
             })
-
     }
 
-    fun onBackPressOpenHomePage(pFragment: Fragment) {
+    fun onBackOpenHomePage(pFragment: Fragment) {
+
         if (mPageTitleStr != "") {
             mPageTitleStr = ""
             parentFragmentManager.beginTransaction()
@@ -158,13 +182,16 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
                 .addToBackStack(null)
                 .remove(pFragment)
                 .commit()
-            //pFragment.activity?.finish()
-
-//        } else {
-            // fragmentBackPressed(parentFragment)
 
         } else {
-            parentFragmentManager.popBackStack()
+            fragmentBackPressed(parentFragment)
+            if (mPageTitleStr != "") {
+                if (pFragment != null) {
+                    onBackOpenHomePage(pFragment)
+                }
+            } else {
+                parentFragmentManager.popBackStack()
+            }
         }
     }
 }

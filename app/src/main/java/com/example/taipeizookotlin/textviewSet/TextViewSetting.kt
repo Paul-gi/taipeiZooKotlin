@@ -56,25 +56,23 @@ class TextViewSetting : AppCompatActivity() {
         mDataBinding.mTitleBar.mToolbar.title = "TextView變形"
         mDataBinding.mTitleBar.mChange.visibility = View.GONE
         // mCompoundDrawable()
-        mCustomFont()
-        mGradient()
-        mCheetah()
-        mFromHtml()
-        mLinkTwo()
-        //todo 分數不太對
-        mFractionSpan()
-        //todo 其中一個沒有動作
-        mSpanArticle()
+        funCustomFont()
+        funGradient()
+        funCheetah()
+        funFromHtml()
+        funLinkTwo()
+        funFractionSpan()
+        funSpanArticle()
         funRainbowOneText(this)
         funRainbowTwoText()
         funAnimationRainbowText()
         funReplacementSpan()
         funEmojiSpan()
-        mLowArticle()
-        mLeadingMarginSpan()
-        mQuoteSpan()
-        mAlignmentSpan()
-        mAlignmentSpanOPPOSITE()
+        funLowArticle()
+        funLeadingMarginSpan()
+        funQuoteSpan()
+        funAlignmentSpan()
+        funAlignmentSpanOPPOSITE()
     }
 
     private enum class Operation {
@@ -155,7 +153,7 @@ class TextViewSetting : AppCompatActivity() {
      * Typeface.createFromAsset 無法使用 使用另一個先取代
      */
     @SuppressLint("SetTextI18n")
-    private fun mCustomFont() {
+    private fun funCustomFont() {
         mDataBinding.mCustomFont.text = "CustomFont"
 //        val typeface: android.graphics.Typeface? =
 //            android.graphics.Typeface.createFromAsset(assets,"font/nutso2.otf")
@@ -177,7 +175,7 @@ class TextViewSetting : AppCompatActivity() {
     原文链接：https://blog.csdn.net/u010126792/article/details/85237085
      */
     @SuppressLint("SetTextI18n")
-    private fun mGradient() {
+    private fun funGradient() {
         mDataBinding.mGradient.text = "Gradient"
         val shader: Shader = LinearGradient(
             0f, 0f, 0f, mDataBinding.mGradient.textSize,
@@ -191,7 +189,7 @@ class TextViewSetting : AppCompatActivity() {
      * 圖片填充
      */
     @SuppressLint("SetTextI18n")
-    private fun mCheetah() {
+    private fun funCheetah() {
         mDataBinding.mCheetah.text = "Cheetah"
         val bitmap = BitmapFactory.decodeResource(
             resources,
@@ -212,7 +210,7 @@ class TextViewSetting : AppCompatActivity() {
      */
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
-    private fun mFromHtml() {
+    private fun funFromHtml() {
         val htmlString = "<h1>Hello World</h1>\n" +
                 "Here is an\n" +
                 "<img src=\"animated_clock\"><i>octopus</i>.<br>\n" +
@@ -225,7 +223,7 @@ class TextViewSetting : AppCompatActivity() {
         )
     }
 
-    private fun mLinkTwo() {
+    private fun funLinkTwo() {
         val iString: Spannable = SpannableString("This is linkTwo")
         iString.setSpan(GoToSettingsSpan(), 0, 15, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         mDataBinding.mlinkTwo.text = iString
@@ -237,7 +235,7 @@ class TextViewSetting : AppCompatActivity() {
      * 呈現分數
      */
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun mFractionSpan() {
+    private fun funFractionSpan() {
         val iTypeface =
             ResourcesCompat.getFont(this, com.example.taipeizookotlin.R.font.icomoon)
         mDataBinding.mFractionSpan.typeface = iTypeface
@@ -273,7 +271,7 @@ class TextViewSetting : AppCompatActivity() {
      * MaskFilterSpan(EmbossMaskFilter)字體矇版/前景加粗樣式
      */
     @SuppressLint("ResourceAsColor")
-    private fun mSpanArticle() {
+    private fun funSpanArticle() {
         val iTypeface: Typeface? =
             ResourcesCompat.getFont(this, com.example.taipeizookotlin.R.font.dancing_script_regular)
         val iString: Spannable =
@@ -520,7 +518,7 @@ class TextViewSetting : AppCompatActivity() {
     /**
      * 簡單項目符號
      */
-    private fun mLowArticle() {
+    private fun funLowArticle() {
         val iSpannableText: Spannable = SpannableString(
             "This question is designed to seed a comprehensive Q&A about these common compilation errors in Java."
         )
@@ -532,7 +530,7 @@ class TextViewSetting : AppCompatActivity() {
     /**
      * 項目符號
      */
-    private fun mLeadingMarginSpan() {
+    private fun funLeadingMarginSpan() {
         val bullets = arrayOf("1.", "2.", "3.", "4.")
         val itemContents = arrayOf(
             "那一天，閉目在經殿香霧中，驀然聽見，你誦經中的真言；",
@@ -588,7 +586,7 @@ class TextViewSetting : AppCompatActivity() {
     /**
      *引用 線
      */
-    private fun mQuoteSpan() {
+    private fun funQuoteSpan() {
         val iString: Spannable =
             SpannableString("Knowledge is one thing, virtue is another good sense is not conscience, refinement is not humility nor is largeness and justness of view faith. ")
         iString.setSpan(QuoteSpan(Color.RED), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -603,7 +601,7 @@ class TextViewSetting : AppCompatActivity() {
      * 反向對齊，Layout.Alignment.ALIGN_OPPOSITE;
      */
     @SuppressLint("SetTextI18n")
-    private fun mAlignmentSpan() {
+    private fun funAlignmentSpan() {
         val iStringNORMAL: Spannable =
             SpannableString("Life comes in a package. This package includes happiness and sorrow")
         val iStringCENTER: Spannable =
@@ -638,7 +636,7 @@ class TextViewSetting : AppCompatActivity() {
     /**
      *更完整的反向對齊，Layout.Alignment.ALIGN_OPPOSITE;
      */
-    private fun mAlignmentSpanOPPOSITE() {
+    private fun funAlignmentSpanOPPOSITE() {
         appendText(
             "Knock knock",
             Layout.Alignment.ALIGN_NORMAL,
